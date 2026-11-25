@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Goyave Business OS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hero 2 colonnes (texte / assistant), bandeau conformité, puis tunnel fiscal en deux couloirs qui convergent vers la DSF */
+:root{
+  --bg:#fefdf9; --surface:#ffffff; --fg:#1d2318; --muted:#5b6451; --line:#e6e4d9;
+  --green:#4a7a1e; --green-btn:#6a9a2f; --green-soft:#e9f1da; --green-ink:#2f5210;
+  --amber:#b5760a; --amber-soft:#fbf0d6; --sky:#1c6f9c; --sky-soft:#e1f0f8;
+  --sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"Geist Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12150f; --surface:#1a1e15; --fg:#eef1e6; --muted:#a3ac96; --line:#2c3224;
+  --green:#97c85a; --green-btn:#6a9a2f; --green-soft:#222d14; --green-ink:#c8e69c;
+  --amber:#e8b04a; --amber-soft:#33280f; --sky:#6cc0ec; --sky-soft:#12293a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12150f; --surface:#1a1e15; --fg:#eef1e6; --muted:#a3ac96; --line:#2c3224;
+  --green:#97c85a; --green-btn:#6a9a2f; --green-soft:#222d14; --green-ink:#c8e69c;
+  --amber:#e8b04a; --amber-soft:#33280f; --sky:#6cc0ec; --sky-soft:#12293a; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1160px;margin:0 auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none}
+.logo i{width:26px;height:26px;border-radius:8px;background:var(--green-btn);display:grid;place-items:center}
+.logo svg{width:14px;height:14px}
+.links{display:flex;gap:26px;font-size:15px;color:var(--muted)}
+.links a{text-decoration:none}.links a:hover{color:var(--fg)}
+@media(max-width:760px){.links{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:13px 22px;font:600 16px var(--sans);text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--green-btn);border-color:var(--green-btn);color:#fff}
+.btn.primary:hover{background:var(--green)}
+.btn.sm{padding:9px 16px;font-size:14px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;padding-block:36px 56px}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 14px;font-size:14px;color:var(--muted)}
+.pill b{width:7px;height:7px;border-radius:50%;background:var(--green-btn)}
+h1{font-size:clamp(34px,5vw,56px);line-height:1.06;letter-spacing:-.025em;margin:22px 0 22px;font-weight:600;text-wrap:balance}
+h1 em{font-style:normal;color:var(--green)}
+.lead{font-size:18px;color:var(--muted);max-width:56ch;margin:0 0 28px}
+.lead strong{color:var(--fg);font-weight:500}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.fine{font-size:14px;color:var(--muted);margin:14px 0 0}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:36px}}
+
+/* assistant card */
+.assist{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px -28px rgba(40,60,20,.35);overflow:hidden}
+.assist header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px}
+.assist header i{width:22px;height:22px;border-radius:6px;background:var(--green-btn)}
+.assist header span{color:var(--muted)}
+.assist .body{padding:18px;display:flex;flex-direction:column;gap:14px}
+.bubble{align-self:flex-end;background:var(--green-soft);color:var(--green-ink);padding:10px 16px;border-radius:12px;font-size:16px}
+.cycle{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cycle h3{display:flex;justify-content:space-between;align-items:center;margin:0;padding:12px 16px;font-size:15px;font-weight:600;border-bottom:1px solid var(--line)}
+.tag{font-size:12px;font-weight:600;background:var(--green-soft);color:var(--green-ink);padding:2px 8px;border-radius:5px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.kpis b{display:block;font:500 18px var(--mono)}
+.kpis small{color:var(--muted);font-size:13px}
+.lines{padding:10px 16px;display:grid;gap:6px;font-size:14px}
+.lines div{display:flex;justify-content:space-between;gap:12px}
+.lines span:first-child{color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin:0}
+@media(max-width:480px){.kpis b{font-size:15px}.lines div{flex-direction:column;gap:0}}
+
+/* trust bar */
+.trust{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;border-top:1px solid var(--line);padding-block:20px;font-size:14px;color:var(--muted)}
+.trust b{color:var(--fg);display:flex;align-items:center;gap:8px}
+
+/* sections */
+section{padding-block:72px}
+.eyebrow{font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+h2{font-size:clamp(28px,3.6vw,40px);line-height:1.12;letter-spacing:-.02em;margin:10px 0 14px;font-weight:600;text-wrap:balance;max-width:22ch}
+.sub{color:var(--muted);font-size:18px;max-width:62ch;margin:0}
+
+/* tunnel */
+.tunnel{margin-top:40px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px}
+.lane{display:grid;gap:14px}
+.lane+.lane{margin-top:26px}
+.lane-label{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.lane-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.steps{display:grid;gap:0;grid-auto-flow:column;grid-auto-columns:1fr;position:relative}
+.step{position:relative;padding:0 6px;text-align:left;background:none;border:0;font:inherit;color:inherit;cursor:pointer}
+.step .dot{display:flex;align-items:center;height:44px;position:relative}
+.step .dot::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;background:var(--line);transform:translateY(-50%)}
+.step:first-child .dot::before{left:20px}
+.step:last-child .dot::before{right:calc(100% - 20px)}
+.step .dot span{position:relative;width:40px;height:40px;border-radius:50%;background:var(--bg);border:2px solid var(--line);display:grid;place-items:center;font:500 13px var(--mono);color:var(--muted);transition:.15s}
+.step.sales .dot::before{background:var(--green-soft)}
+.step.pay .dot::before{background:var(--amber-soft)}
+.step:hover .dot span{border-color:var(--green)}
+.step[aria-selected="true"] .dot span{background:var(--green-btn);border-color:var(--green-btn);color:#fff;transform:scale(1.1)}
+.step.pay[aria-selected="true"] .dot span{background:var(--amber);border-color:var(--amber)}
+.step h4{margin:8px 0 2px;font-size:16px;font-weight:600}
+.step p{margin:0;font-size:13px;color:var(--muted);line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{font:500 12px var(--mono);padding:2px 7px;border-radius:5px;background:var(--green-soft);color:var(--green-ink)}
+.pay .chip{background:var(--amber-soft);color:var(--amber)}
+.chip.dgi{background:var(--sky-soft);color:var(--sky)}
+.converge{display:flex;align-items:center;gap:14px;margin-top:26px;padding:16px 18px;border-radius:12px;border:1px dashed var(--green);background:var(--green-soft);color:var(--green-ink)}
+.converge svg{flex:none;width:28px;height:28px}
+.converge b{display:block}
+.converge span{font-size:14px;opacity:.9}
+.detail{margin-top:26px;border-top:1px solid var(--line);padding-top:24px;display:grid;grid-template-columns:1fr 1.2fr;gap:28px}
+.detail h3{margin:0 0 6px;font-size:22px;letter-spacing:-.01em}
+.detail .what{color:var(--muted);margin:0 0 14px}
+.detail ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15px}
+.detail li{display:flex;gap:10px}
+.detail li::before{content:"";flex:none;width:6px;height:6px;margin-top:9px;border-radius:50%;background:var(--green-btn)}
+.taxbox{border:1px solid var(--line);border-radius:12px;overflow:hidden;align-self:start}
+.taxbox .row{display:flex;justify-content:space-between;gap:14px;padding:11px 16px;font-size:14px;border-bottom:1px solid var(--line)}
+.taxbox .row:last-child{border-bottom:0}
+.taxbox .row span:first-child{color:var(--muted)}
+.taxbox .row b{font:500 14px var(--mono);text-align:right}
+.taxbox .head{background:var(--bg);font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:860px){
+  .steps{grid-auto-flow:row}
+  .step{display:grid;grid-template-columns:44px 1fr;column-gap:12px;padding:0 0 18px}
+  .step .dot{grid-row:1/4;height:auto;align-items:flex-start}
+  .step .dot::before{left:20px!important;right:auto!important;width:3px;height:100%;top:0;transform:none}
+  .step:last-child .dot::before{height:20px}
+  .step h4{margin-top:0}
+  .detail{grid-template-columns:1fr}
+  .tunnel{padding:18px}
+}
+
+/* modules */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card .ic{width:38px;height:38px;border-radius:10px;background:var(--green-soft);color:var(--green-ink);display:grid;place-items:center;margin-bottom:14px}
+.card .ic svg{width:20px;height:20px}
+.card h3{margin:0 0 6px;font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+@media(min-width:600px) and (max-width:860px){.grid{grid-template-columns:1fr 1fr}}
+
+/* final */
+.final{background:var(--green-ink);color:#f4f8ea;border-radius:20px;padding:48px 36px;text-align:center;margin-block:24px 56px}
+:root[data-theme="dark"] .final{background:#223312}
+.final h2{margin-inline:auto;color:#fff;max-width:24ch}
+.final p{margin:0 auto 26px;max-width:54ch;opacity:.85}
+.final .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.final .cta{justify-content:center}
+footer{border-top:1px solid var(--line);padding-block:26px 40px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+
+<div class="wrap">
+<nav>
+  <a class="logo" href="#"><i><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C7 6 5 10 5 14a7 7 0 0 0 14 0c0-4-2-8-7-12z"/></svg></i>Goyave</a>
+  <div class="links"><a href="#tunnel">Du devis à la déclaration</a><a href="#modules">Modules</a><a href="#contact">Tarifs</a></div>
+  <a class="btn sm" href="#contact">Demander une démo</a>
+</nav>
+
+<div class="hero">
+  <div>
+    <span class="pill"><b></b>Conçu au Gabon, pour les PME de l’espace OHADA</span>
+    <h1>Piloter, déclarer et scaler votre entreprise, <em>sur un même logiciel</em></h1>
+    <p class="lead"><strong>Goyave, le logiciel de gestion des PME gabonaises :</strong> devis, factures, comptabilité SYSCOHADA, paie, CNSS et CNAMGS, TVA, TSIL, CSS, DTS, DAS, DSF, en conformité avec le droit gabonais.</p>
+    <div class="cta"><a class="btn primary" href="#contact">Essayer gratuitement</a><a class="btn" href="#contact">Demander une démo</a></div>
+    <p class="fine">Sans carte bancaire. Compte créé en une minute.</p>
+  </div>
+
+  <div class="assist" aria-label="Exemple de l’assistant Goyave">
+    <header><i></i><b>Assistant Goyave</b><span>· Okoumé Distribution SARL</span></header>
+    <div class="body">
+      <div class="bubble">prépare la paie de juin</div>
+      <div class="cycle">
+        <h3>Cycle de paie — juin 2026 <span class="tag">Calculé</span></h3>
+        <div class="kpis">
+          <div><b>12</b><small>bulletins</small></div>
+          <div><b>6 240 000</b><small>brut FCFA</small></div>
+          <div><b>4 699 100</b><small>net à payer</small></div>
+        </div>
+        <div class="lines mono">
+          <div><span>CNSS salarial (5 %, plafond 1,5 M)</span><span>− 282 000</span></div>
+          <div><span>CNAMGS salarial (2 %, plafond 2,5 M)</span><span>− 124 800</span></div>
+          <div><span>IRPP (barème CGI 2022, quotient familial)</span><span>− 987 100</span></div>
+          <div><span>TCTS (5 % au-delà de 150 000)</span><span>− 147 000</span></div>
+        </div>
+      </div>
+      <p class="note">Les quatre déclarations du mois ont été ouvertes dans le calendrier.</p>
+    </div>
+  </div>
+</div>
+
+<div class="trust">
+  <b><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Conformité</b>
+  <span>Plan comptable SYSCOHADA</span><span>Barèmes IRPP du CGI 2022</span><span>Journal d’audit conservé 10 ans</span><span>Données isolées par entreprise</span>
+</div>
+
+<section id="tunnel">
+  <span class="eyebrow">Le tunnel fiscal et social</span>
+  <h2>Chaque vente et chaque salaire alimentent vos déclarations</h2>
+  <p class="sub">Vous saisissez une seule fois. Goyave suit les taxes et cotisations de bout en bout, du premier devis jusqu’à la DSF de fin d’année. Cliquez sur une étape pour voir ce qui se passe.</p>
+
+  <div class="tunnel">
+    <div class="lane">
+      <div class="lane-label">Parcours client et facturation</div>
+      <div class="steps" role="tablist" aria-label="Étapes ventes">
+        <button class="step sales" role="tab" data-k="devis"><div class="dot"><span>1</span></div><h4>Devis</h4><p>Offre chiffrée, HT et TTC</p><div class="chips"><span class="chip">TVA prévue</span></div></button>
+        <button class="step sales" role="tab" data-k="commande"><div class="dot"><span>2</span></div><h4>Commande</h4><p>Acceptation et suivi</p><div class="chips"><span class="chip">Stock</span></div></button>
+        <button class="step sales" role="tab" data-k="facture" aria-selected="true"><div class="dot"><span>3</span></div><h4>Facture</h4><p>Pièce comptable conforme</p><div class="chips"><span class="chip">TVA 18 %</span><span class="chip">TSIL</span><span class="chip">CSS</span></div></button>
+        <button class="step sales" role="tab" data-k="tva"><div class="dot"><span>4</span></div><h4>TVA</h4><p>Déclaration mensuelle</p><div class="chips"><span class="chip dgi">DGI</span></div></button>
+      </div>
+    </div>
+
+    <div class="lane">
+      <div class="lane-label">Parcours paie et social</div>
+      <div class="steps" role="tablist" aria-label="Étapes paie">
+        <button class="step pay" role="tab" data-k="paie"><div class="dot"><span>5</span></div><h4>Paie</h4><p>Bulletins et net à payer</p><div class="chips"><span class="chip">CNSS</span><span class="chip">CNAMGS</span><span class="chip">IRPP</span><span class="chip">TCTS</span></div></button>
+        <button class="step pay" role="tab" data-k="dts"><div class="dot"><span>6</span></div><h4>DTS</h4><p>Déclaration des salaires</p><div class="chips"><span class="chip dgi">DGI</span></div></button>
+        <button class="step pay" role="tab" data-k="das"><div class="dot"><span>7</span></div><h4>DAS</h4><p>Récapitulatif annuel</p><div class="chips"><span class="chip dgi">DGI</span></div></button>
+      </div>
+    </div>
+
+    <div class="converge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5c0 6 8 5 8 11M20 5c0 6-8 5-8 11M12 16v4M9 18l3 3 3-3"/></svg>
+      <div><b>DSF : la synthèse de fin d’année</b><span>Les ventes, la TVA, la paie et les déclarations déjà faites convergent vers la comptabilité SYSCOHADA, puis vers votre DSF.</span></div>
+    </div>
+
+    <div class="detail" id="detail" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="modules" style="padding-top:8px">
+  <span class="eyebrow">Tout dans un seul outil</span>
+  <h2>De la facture au bilan, sans ressaisie</h2>
+  <div class="grid">
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/></svg></div><h3>Devis et factures</h3><p>Documents conformes, relances clients et suivi des paiements en FCFA.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div><h3>Comptabilité SYSCOHADA</h3><p>Écritures générées automatiquement. Grand livre, balance et états à tout moment.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-4 3-6 6.5-6s5.900 2 6.500 6M17 6a3 3 0 0 1 0 6"/></svg></div><h3>Paie, CNSS et CNAMGS</h3><p>Bulletins, plafonds et barème IRPP à jour. Un cycle de paie en une phrase.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Calendrier fiscal</h3><p>Échéances DGI, CNSS et CNAMGS ouvertes pour vous, avec rappel avant la date limite.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.500 8-8 9-4.500-1-8-4-8-9V6z"/></svg></div><h3>Journal d’audit</h3><p>Chaque action est tracée et conservée 10 ans pour vos contrôles.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.700M21 4v5h-5"/></svg></div><h3>Pensé pour grandir</h3><p>De 3 à 300 salariés, ajoutez sociétés, utilisateurs et activités sans changer d’outil.</p></div>
+  </div>
+</section>
+
+<div class="final" id="contact">
+  <h2>Prêt à piloter votre PME sur un même logiciel ?</h2>
+  <p>Créez votre compte en une minute, ou demandez une démonstration avec les chiffres de votre entreprise.</p>
+  <div class="cta"><a class="btn primary" href="#contact">Essayer gratuitement</a><a class="btn ghost" href="#contact">Demander une démo</a></div>
+</div>
+
+<footer><span><b>Goyave</b> · Conçu au Gabon pour les PME de l’espace OHADA</span><span>Maquette de présentation</span></footer>
+</div>
+
+<script>
+var D={
+devis:{t:"Devis",w:"Vous préparez l’offre, Goyave calcule les montants et la TVA prévue.",l:["Lignes de produits et services avec prix en FCFA","Total HT, TVA et TTC affichés au client","Transformation en commande en un clic"],r:[["Base HT","Saisie"],["TVA prévue","18 %"],["Total TTC","Calculé"]]},
+commande:{t:"Commande",w:"Le devis accepté devient une commande suivie jusqu’à la livraison.",l:["Statut visible : en attente, livrée, facturée","Stock mis à jour à la livraison","Aucune ressaisie au moment de facturer"],r:[["Origine","Devis accepté"],["Prochaine étape","Facture"],["Stock","Mis à jour"]]},
+facture:{t:"Facture",w:"La facture est la pièce comptable qui déclenche les taxes sur vos ventes.",l:["Numérotation continue et mentions légales","TVA 18 %, TSIL et CSS calculées selon le type de vente","Écriture SYSCOHADA générée automatiquement","Encaissement et relance suivis par client"],r:[["TAXE","SUIT À"],["TVA collectée","Déclaration TVA"],["TSIL","Suivi dans le calendrier fiscal"],["CSS","Suivi dans le calendrier fiscal"]]},
+tva:{t:"TVA",w:"Goyave compare la TVA collectée sur vos ventes et la TVA déductible sur vos achats.",l:["Déclaration préparée à partir des factures du mois","TVA à payer ou crédit de TVA calculé","Échéance DGI ouverte dans le calendrier"],r:[["TVA collectée","Factures de vente"],["TVA déductible","Factures d’achat"],["TVA à payer","Collectée − déductible"]]},
+paie:{t:"Paie",w:"Un cycle de paie calcule chaque bulletin avec les barèmes en vigueur.",l:["CNSS salariale : 5 %, plafond 1,5 M","CNAMGS salariale : 2 %, plafond 2,5 M","IRPP selon le barème CGI 2022 et le quotient familial","TCTS : 5 % au-delà de 150 000"],r:[["CNSS salarial","5 % · plafond 1,5 M"],["CNAMGS salarial","2 % · plafond 2,5 M"],["IRPP","Barème CGI 2022"],["TCTS","5 % au-delà de 150 000"]]},
+dts:{t:"DTS",w:"Les salaires versés dans le mois alimentent votre déclaration pour l’administration fiscale.",l:["Données reprises des bulletins validés","Contrôle des écarts avant dépôt","Échéance ouverte dans le calendrier"],r:[["Source","Bulletins de paie"],["Destinataire","DGI"],["Rythme","Selon le calendrier fiscal"]]},
+das:{t:"DAS",w:"En fin d’année, Goyave rassemble les salaires et retenues de chaque employé.",l:["Cumul annuel par salarié","Cohérence vérifiée avec les DTS déjà faites","Export prêt à déposer"],r:[["Source","Paies de l’année"],["Destinataire","DGI"],["Rythme","Annuel"]]}
+};
+var box=document.getElementById("detail");
+function show(k){
+  var d=D[k],rows="";
+  d.r.forEach(function(x,i){rows+='<div class="row'+(x[0]==="TAXE"?' head':'')+'"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'});
+  box.innerHTML='<div><h3>'+d.t+'</h3><p class="what">'+d.w+'</p><ul>'+d.l.map(function(i){return'<li>'+i+'</li>'}).join('')+'</ul></div><div class="taxbox">'+rows+'</div>';
+  document.querySelectorAll(".step").forEach(function(s){s.setAttribute("aria-selected",s.dataset.k===k?"true":"false")});
+}
+document.querySelectorAll(".step").forEach(function(s){s.addEventListener("click",function(){show(s.dataset.k)})});
+show("facture");
+</script>
+
+</html>
